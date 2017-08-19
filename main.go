@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"path/filepath"
+	"os"
 	"sync"
 )
 
@@ -16,8 +16,14 @@ type templateHandler struct {
 }
 
 func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	// []byte型のテンプレート情報を取得
+	tpl, err := Asset("templates/chat.html")
+	if err != nil {
+		log.Fatal("ListenAndSearver:", err)
+		os.Exit(1)
+	}
 	t.once.Do(func() {
-		t.temp1 = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
+		t.temp1 = template.Must(template.New("templates/chat.html").Parse(string(tpl)))
 	})
 	t.temp1.Execute(w, nil)
 }

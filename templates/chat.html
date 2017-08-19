@@ -40,7 +40,7 @@
           alert("接続が終了しました。");
         }
         socket.onmessage = function(e){
-          message.append($("<li>").text(e.data));
+          messages.append($("<li>").text(e.data));
         }
       }
     });
