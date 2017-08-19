@@ -4,6 +4,7 @@ import (
 	"flag"
 	"html/template"
 	"log"
+	"my_packages/trace"
 	"net/http"
 	"os"
 	"sync"
@@ -33,6 +34,7 @@ func main() {
 	var addr = flag.String("addr", ":8080", "アプリケーションのアドレス")
 	flag.Parse()
 	r := newRoom()
+	r.tracer = trace.New(os.Stdout)
 	// ルート
 	http.Handle("/", &templateHandler{filename: "chat.html"})
 	http.Handle("/room", r)
