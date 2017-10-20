@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 	"sync"
+
+	"github.com/ryonakao/talkativeness"
 )
 
 // temp1は1つのテンプレートを表します
@@ -19,6 +21,7 @@ type templateHandler struct {
 
 func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// []byte型のテンプレート情報を取得
+	talkativeness.LogRequest(r, true)
 	tpl, err := Asset("templates/chat.html")
 	if err != nil {
 		log.Fatal("ListenAndSearver:", err)
